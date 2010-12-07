@@ -419,7 +419,7 @@ set grepprg=/bin/grep\ -nH
 map <leader>q :e ~/buffer<cr>
 
 " Load autoclose HTML Tags
-:au Filetype php,html,xml,xsl source ~/.vim/bundle/autoclosetag/html_autoclosetag.vim
+:au Filetype php,html,xml,xsl source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
 
 
 
