@@ -6,7 +6,12 @@ call pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=300
+set ttyfast
+set undofile
 set hidden
+
+" Turn off Vi compatibility
+set nocompatible
 
 " Enable filetype plugin
 filetype plugin on
@@ -23,8 +28,10 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+
 " Fast editing of the .vimrc
-map <leader>e :e! ~/.vim_runtime/vimrc<cr>
+" map <leader>e :e! ~/.vim_runtime/vimrc<cr>
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vim_runtime/vimrc
@@ -39,6 +46,7 @@ set so=7
 set wildmenu "Turn on WiLd menu
 
 set ruler "Always show current position
+set relativenumber
 
 set cmdheight=2 "The commandbar height
 
@@ -137,12 +145,9 @@ set tw=500
 
 "set ai "Auto indent
 "set si "Smart indet
-set wrap "Wrap lines
-
-map <leader>t2 :setlocal shiftwidth=2<cr>
-map <leader>t4 :setlocal shiftwidth=4<cr>
-map <leader>t8 :setlocal shiftwidth=4<cr>
-
+set wrap linebreak nolist
+set textwidth=79
+set formatoptions=qrn1
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -257,7 +262,9 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+" map <leader>bd :Bclose<cr>
+macm File.Close key=<nop>
+	nmap <D-w> :bd<cr>
 
 " Close all the buffers
 map <leader>ba :1,300 bd!<cr>
@@ -439,6 +446,66 @@ vnoremap k gk
 noremap p p`[
 noremap P P`[
 
+
+" Insert an empty line above or below the cursor
+nnoremap <D-j> o<Esc>
+nnoremap <D-k> O<Esc>
+
+" Turn search highlighting off quickly
+nnoremap <leader><space> :noh<cr>
+
+" Make selecting inside an HTML tag less dumb
+nnoremap Vit vitVkoj
+nnoremap Vat vatV
+
+" Set LESS filetype automatically!
+au BufNewFile,BufRead *.less set filetype=less
+
+" Show Yankring contents
+nnoremap <silent> <leader>y :YRShow<cr>
+
+" let php_sql_query = 1  "for SQL syntax highlighting inside strings
+let php_htmlInStrings = 1  "for HTML syntax highlighting inside strings
+
+" Adding a Next verb to Vim commands 
+" SOURCE: http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P
+" Shortcut for square brackets "
+onoremap id i[
+onoremap ad a[
+
+" Next () "
+onoremap <silent> inb :<C-U>normal! f(vib<cr>
+onoremap <silent> anb :<C-U>normal! f(vab<cr>
+onoremap <silent> in( :<C-U>normal! f(vi(<cr>
+onoremap <silent> an( :<C-U>normal! f(va(<cr>
+
+" Next {} "
+onoremap <silent> inB :<C-U>normal! f{viB<cr>
+onoremap <silent> anB :<C-U>normal! f{vaB<cr>
+onoremap <silent> in{ :<C-U>normal! f{vi{<cr>
+onoremap <silent> an{ :<C-U>normal! f{va{<cr>
+
+" Next [] "
+onoremap <silent> ind :<C-U>normal! f[vi[<cr>
+onoremap <silent> and :<C-U>normal! f[va[<cr>
+onoremap <silent> in[ :<C-U>normal! f[vi[<cr>
+onoremap <silent> an[ :<C-U>normal! f[va[<cr>
+
+" Next <> "
+onoremap <silent> in< :<C-U>normal! f<vi<<cr>
+onoremap <silent> an< :<C-U>normal! f<va<<cr>
+
+" Next '' "
+onoremap <silent> in' :<C-U>normal! f'vi'<cr>
+onoremap <silent> an' :<C-U>normal! f'va'<cr>
+
+" Next "" "
+onoremap <silent> in" :<C-U>normal! f"vi"<cr>
+onoremap <silent> an" :<C-U>normal! f"va"<cr>
+
+" Rainbows!
+nmap <leader>R :RainbowParenthesesToggle<CR>
+
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
@@ -490,153 +557,3 @@ function s:FileCommand(name, ...)
   execute 'command -nargs=1 -complete=file ' . a:name . ' :call ' . funcname . '(<f-args>)'
 endfunction
 
-function s:DefineCommand(name, destination)
-  call s:FileCommand(a:destination)
-  call s:CommandCabbr(a:name, a:destination)
-endfunction
-
-" Public NERDTree-aware versions of builtin functions
-function ChangeDirectory(dir, ...)
-  execute "cd " . a:dir
-  let stay = exists("a:1") ? a:1 : 1
-  call s:UpdateNERDTree(stay)
-endfunction
-
-function Touch(file)
-  execute "!touch " . a:file
-  call s:UpdateNERDTree(1)
-endfunction
-
-function Remove(file)
-  let current_path = expand("%")
-  let removed_path = fnamemodify(a:file, ":p")
-
-  if (current_path == removed_path) && (getbufvar("%", "&modified"))
-    echo "You are trying to remove the file you are editing. Please close the buffer first."
-  else
-    execute "!rm " . a:file
-  endif
-endfunction
-
-function Edit(file)
-  if exists("b:NERDTreeRoot")
-    wincmd p
-  endif
-
-ruby << RUBY
-  destination = File.expand_path(VIM.evaluate(%{system("dirname " . a:file)}))
-  pwd         = File.expand_path(Dir.pwd)
-  home        = pwd == File.expand_path("~")
-
-  if home || Regexp.new("^" + Regexp.escape(pwd)) !~ destination
-    VIM.command(%{call ChangeDirectory(system("dirname " . a:file), 0)})
-  end
-RUBY
-endfunction
-
-" Define the NERDTree-aware aliases
-call s:DefineCommand("cd", "ChangeDirectory")
-call s:DefineCommand("touch", "Touch")
-call s:DefineCommand("rm", "Remove")
-call s:DefineCommand("e", "Edit")
-
-" Insert an empty line above or below the cursor
-nnoremap <D-j> o<Esc>
-nnoremap <D-k> O<Esc>
-
-" Turn search highlighting off quickly
-nnoremap <leader><space> :noh<cr>
-
-" Turn off Vi compatibility
-set nocompatible
-
-" Make selecting inside an HTML tag less dumb
-nnoremap Vit vitVkoj
-nnoremap Vat vatV
-
-" Set LESS filetype automatically!
-au BufNewFile,BufRead *.less set filetype=less
-
-" Yankring
-nnoremap <silent> <leader>y :YRShow<cr>
-
-"tab line
-fun! MyTabLine()
-	let s = ''
-	for i in range(tabpagenr('$'))
-		" select the highlighting
-		if i + 1 == tabpagenr()
-			let s .= '%#TabLineSel#'
-		else
-			let s .= '%#TabLine#'
-		endif
-		" set the tab page number (for mouse clicks)
-		let s .= '%' . (i + 1) . 'T'.(i+1).''
-		" the filename is made by MyTabLabel()
-		let s .= '%{MyTabLabel(' . (i + 1) . ')}  '
-	endfor
-	" after the last tab fill with TabLineFill and reset tab page nr
-	let s .= '%#TabLineFill#%T'
-	return s
-endfunction
-
-fun! MyTabLabel(n)
-	let buflist = tabpagebuflist(a:n)
-	let winnr = tabpagewinnr(a:n)
-	let fullname = bufname(buflist[winnr - 1])
-	" show a/b/c/filename.ext
-	"let fullname = substitute(fullname,"(\w){1}\w*/","\1/","g")
-	" show filename.ext
-	let fullname = substitute(fullname,".*/","","")
-	if getbufvar(buflist[winnr - 1],"&mod")
-		let modified = "+"
-	else
-		let modified = " "
-	endif
-	return modified.fullname
-endfunction
-
-" Use the above tabe naming scheme
-set tabline=%!MyTabLine()
-
-" let php_sql_query = 1  "for SQL syntax highlighting inside strings
-let php_htmlInStrings = 1  "for HTML syntax highlighting inside strings
-
-" Adding a Next verb to Vim commands 
-" SOURCE: http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P
-" Shortcut for square brackets "
-onoremap id i[
-onoremap ad a[
-
-" Next () "
-onoremap <silent> inb :<C-U>normal! f(vib<cr>
-onoremap <silent> anb :<C-U>normal! f(vab<cr>
-onoremap <silent> in( :<C-U>normal! f(vi(<cr>
-onoremap <silent> an( :<C-U>normal! f(va(<cr>
-
-" Next {} "
-onoremap <silent> inB :<C-U>normal! f{viB<cr>
-onoremap <silent> anB :<C-U>normal! f{vaB<cr>
-onoremap <silent> in{ :<C-U>normal! f{vi{<cr>
-onoremap <silent> an{ :<C-U>normal! f{va{<cr>
-
-" Next [] "
-onoremap <silent> ind :<C-U>normal! f[vi[<cr>
-onoremap <silent> and :<C-U>normal! f[va[<cr>
-onoremap <silent> in[ :<C-U>normal! f[vi[<cr>
-onoremap <silent> an[ :<C-U>normal! f[va[<cr>
-
-" Next <> "
-onoremap <silent> in< :<C-U>normal! f<vi<<cr>
-onoremap <silent> an< :<C-U>normal! f<va<<cr>
-
-" Next '' "
-onoremap <silent> in' :<C-U>normal! f'vi'<cr>
-onoremap <silent> an' :<C-U>normal! f'va'<cr>
-
-" Next "" "
-onoremap <silent> in" :<C-U>normal! f"vi"<cr>
-onoremap <silent> an" :<C-U>normal! f"va"<cr>
-
-" Rainbows!
-nmap <leader>R :RainbowParenthesesToggle<CR>
