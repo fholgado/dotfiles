@@ -6,7 +6,7 @@
 	url = https://github.com/scrooloose/nerdtree.git
 [submodule "bundle/yankring"]
 	path = bundle/yankring
-	url = https://github.com/chrismetcalf/vim-yankring.git
+	url = https://github.com/vim-scripts/YankRing.vim.git
 [submodule "bundle/nerdcommenter"]
 	path = bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
@@ -28,3 +28,6 @@
 [submodule "bundle/tcomment"]
 	path = bundle/tcomment
 	url = https://github.com/vim-scripts/tComment.git
+[submodule "bundle/html-autoclosetag"]
+	path = bundle/html-autoclosetag
+	url = https://github.com/vim-scripts/HTML-AutoCloseTag.git
