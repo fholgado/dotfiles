@@ -637,3 +637,6 @@ onoremap <silent> an' :<C-U>normal! f'va'<cr>
 " Next "" "
 onoremap <silent> in" :<C-U>normal! f"vi"<cr>
 onoremap <silent> an" :<C-U>normal! f"va"<cr>
+
+" Rainbows!
+nmap <leader>R :RainbowParenthesesToggle<CR>
