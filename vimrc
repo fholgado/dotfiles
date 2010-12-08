@@ -40,7 +40,7 @@ set wildmenu "Turn on WiLd menu
 
 set ruler "Always show current position
 
-set cmdheight=2 "The commandbar height
+set cmdheight=1 "The commandbar height
 
 set hid "Change buffer - without saving
 
@@ -123,12 +123,10 @@ autocmd FileType html set formatoptions+=tl
 autocmd FileType html,css set noexpandtab tabstop=2
 
 set lbr
-set tw=500
 
 set autoindent "Auto indent
 set wrap linebreak nolist
-set textwidth=79
-set formatoptions=qrn1
+" set formatoptions=qrn1
 
 " Really useful!
 "  In visual mode when you press * or # to search for the current selection
@@ -272,10 +270,10 @@ map <leader>q :e ~/buffer<cr>
 :au Filetype php,html,xml,xsl source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
 
 " Set to full screen on load
-" if has("gui_running")
-"   set fuoptions=maxvert,maxhorz
-"   au GUIEnter * set fullscreen
-" endif
+if has("gui_running")
+  set fuoptions=maxvert,maxhorz
+  au GUIEnter * set fullscreen
+endif
 
 " sane movement with wrap turned on
 nnoremap j gj
