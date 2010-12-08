@@ -27,7 +27,6 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
-
 " Fast editing of the .vimrc
 " map <leader>e :e! ~/.vim_runtime/vimrc<cr>
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
@@ -36,10 +35,6 @@ nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 autocmd! bufwritepost vimrc source ~/.vim/vimrc
 autocmd! bufwritepost .vimrc source ~/.vim/vimrc
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the curors - when moving vertical..
 set so=7
 
@@ -71,15 +66,14 @@ set noerrorbells
 set novisualbell
 set visualbell t_vb=
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable "Enable syntax hl
 
 " Set Fonts
 set gfn=Inconsolata:h14
 set shell=/bin/bash
+
+" Highlight current line
+:set cursorline
 
 if has("gui_running")
   set guioptions-=T
@@ -92,7 +86,6 @@ if has("gui_running")
   set background=dark
   set t_Co=256
   set background=dark
-  " colorscheme asu1dark
   colorscheme molokai2
 
   set nu
@@ -111,19 +104,11 @@ endtry
 
 set ffs=unix,dos,mac "Default file types
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files and backups
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git anyway...
 set nobackup
 set nowb
 set noswapfile
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set smarttab
 set tabstop=2
 set shiftwidth=2
@@ -148,9 +133,6 @@ set wrap linebreak nolist
 set textwidth=79
 set formatoptions=qrn1
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
 " Really useful!
 "  In visual mode when you press * or # to search for the current selection
 vnoremap <silent> * :call VisualSearch('f')<CR>
@@ -159,7 +141,6 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 " When you press gv you vimgrep after the selected text
 vnoremap <silent> gv :call VisualSearch('gv')<CR>
 map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
 
 function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
@@ -187,72 +168,9 @@ function! VisualSearch(direction) range
     let @" = l:saved_reg
 endfunction
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Command mode related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Smart mappings on the command line
-cno $h e ~/
-cno $d e ~/Desktop/
-cno $j e ./
-cno $c e <C-\>eCurrentFileDir("e")<cr>
-
-" Highlight current line
-:set cursorline
-
-" $q is super useful when browsing on the command line
-cno $q <C-\>eDeleteTillSlash()<cr>
-
-" Bash like keys for the command line
-cnoremap <C-A>		<Home>
-cnoremap <C-E>		<End>
-cnoremap <C-K>		<C-U>
-
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
-
-" Useful on some European keyboards
-map ½ $
-imap ½ $
-vmap ½ $
-cmap ½ $
-
-
-func! Cwd()
-  let cwd = getcwd()
-  return "e " . cwd 
-endfunc
-
-func! DeleteTillSlash()
-  let g:cmd = getcmdline()
-  if MySys() == "linux" || MySys() == "mac"
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-  else
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-  endif
-  if g:cmd == g:cmd_edited
-    if MySys() == "linux" || MySys() == "mac"
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-    else
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-    endif
-  endif   
-  return g:cmd_edited
-endfunc
-
-func! CurrentFileDir(cmd)
-  return a:cmd . " " . expand("%:p:h") . "/"
-endfunc
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
 map <space> /
 map <c-space> ?
-map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move btw. windows
 map <C-j> <C-W>j
@@ -260,15 +178,10 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Close the current buffer
-" map <leader>bd :Bclose<cr>
-macm File.Close key=<nop>
-	nmap <D-w> :bd<cr>
-
 " Close all the buffers
 map <leader>ba :1,300 bd!<cr>
 
-" Use the arrows to something usefull
+" Switch buffers with L and H easily
 map L :bn<cr>
 map H :bp<cr>
 
@@ -280,8 +193,12 @@ map <leader>tm :tabmove
 
 " When pressing <leader>cd switch to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>
+
+" Custom maps to set working directories quickly
+" At Work
 map <leader>p1 :cd /Applications/XAMPP/htdocs/ptonline/trunk/system/application/<cr>
 map <leader>p2 :cd /Applications/XAMPP/htdocs/pt20/trunk/<cr>
+" At Home
 map <leader>p3 :cd ~/Sites/ptonline/system/application/<cr>
 map <leader>p4 :cd ~/Sites/pt20/<cr>
 
@@ -306,51 +223,31 @@ function! <SID>BufcloseCloseIt()
    endif
 endfunction
 
-" Specify the behavior when switching between buffers 
-" try
-"   set switchbuf=usetab
-"   set stal=2
-" catch
-" endtry
-
-
-""""""""""""""""""""""""""""""
-" => Statusline
-""""""""""""""""""""""""""""""
 " Always hide the statusline
 set laststatus=2
 
 " Format the statusline
 set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
 
-
 function! CurDir()
     let curdir = substitute(getcwd(), '/Users/amir/', "~/", "g")
     return curdir
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General Abbrevs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Remap VIM 0
 map 0 ^
 
-"TODO: Fix this shit!
-"Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
+" Bubble single lines
+nmap K [e
+nmap J ]e
+" Bubble multiple lines
+vmap K [egv
+vmap J ]egv
 
-""""""""""""""""""""""""""""""
-" => Minibuffer plugin
-""""""""""""""""""""""""""""""
+" Visually select the text that was last edited/pasted
+nmap gV `[v`]
+
+" Minibuffer plugin
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 2
 let g:miniBufExplModSelTarget = 0
@@ -363,25 +260,12 @@ let g:bufExplorerSortBy = "name"
 
 autocmd BufRead,BufNew :call UMiniBufExplorer
 
-map <leader>u :TMiniBufExplorer<cr>:TMiniBufExplorer<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Omni complete functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
 "Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
-"Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
 au FileType javascript setl nocindent
-
 au FileType javascript imap <c-a> alert();<esc>hi
 
 "Quickly open a buffer for scripbble
@@ -464,3 +348,7 @@ onoremap <silent> an" :<C-U>normal! f"va"<cr>
 
 " Rainbows!
 nmap <leader>R :RainbowParenthesesToggle<CR>
+
+" NERDTree configuration
+let NERDTreeIgnore=['\.rbc$', '\~$']
+map <Leader>n :NERDTreeToggle<CR>

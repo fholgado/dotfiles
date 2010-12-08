@@ -42,3 +42,6 @@
 	path = bundle/html-autoclosetag
 	url = https://github.com/vim-scripts/HTML-AutoCloseTag.git
 	ignore = untracked
+[submodule "bundle/unimpaired"]
+	path = bundle/unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
