@@ -125,8 +125,7 @@ autocmd FileType html,css set noexpandtab tabstop=2
 set lbr
 set tw=500
 
-set ai "Auto indent
-set si "Smart indet
+set autoindent "Auto indent
 set wrap linebreak nolist
 set textwidth=79
 set formatoptions=qrn1
@@ -350,3 +349,20 @@ nmap <leader>R :RainbowParenthesesToggle<CR>
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
+
+function! MyFoldText()
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces "
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 4
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction
+set foldtext=MyFoldText()
