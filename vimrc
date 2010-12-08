@@ -7,7 +7,6 @@ call pathogen#helptags()
 " Sets how many lines of history VIM has to remember
 set history=300
 set ttyfast
-set undofile
 set hidden
 
 " Turn off Vi compatibility
@@ -34,7 +33,8 @@ nmap <leader>w :w!<cr>
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 " When vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vim_runtime/vimrc
+autocmd! bufwritepost vimrc source ~/.vim/vimrc
+autocmd! bufwritepost .vimrc source ~/.vim/vimrc
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -46,7 +46,6 @@ set so=7
 set wildmenu "Turn on WiLd menu
 
 set ruler "Always show current position
-set relativenumber
 
 set cmdheight=2 "The commandbar height
 
@@ -143,8 +142,8 @@ autocmd FileType html,css set noexpandtab tabstop=2
 set lbr
 set tw=500
 
-"set ai "Auto indent
-"set si "Smart indet
+set ai "Auto indent
+set si "Smart indet
 set wrap linebreak nolist
 set textwidth=79
 set formatoptions=qrn1
@@ -370,12 +369,8 @@ map <leader>u :TMiniBufExplorer<cr>:TMiniBufExplorer<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Omni complete functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
@@ -385,50 +380,15 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-
-""""""""""""""""""""""""""""""
-" => JavaScript section
-"""""""""""""""""""""""""""""""
-au FileType javascript setl fen
 au FileType javascript setl nocindent
 
-au FileType javascript imap <c-t> AJS.log();<esc>hi
 au FileType javascript imap <c-a> alert();<esc>hi
-
-au FileType javascript inoremap <buffer> $r return 
-au FileType javascript inoremap <buffer> $f //--- PH ----------------------------------------------<esc>FP2xi
-
-function! JavaScriptFold() 
-    setl foldmethod=syntax
-    setl foldlevelstart=1
-    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-
-    function! FoldText()
-    return substitute(getline(v:foldstart), '{.*', '{...}', '')
-    endfunction
-    setl foldtext=FoldText()
-endfunction
-
-""""""""""""""""""""""""""""""
-" => Close Buffers
-""""""""""""""""""""""""""""""
-map <leader>c :bd<CR>
-
-
-""""""""""""""""""""""""""""""
-" => Vim grep
-""""""""""""""""""""""""""""""
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
-set grepprg=/bin/grep\ -nH
-
 
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
 
 " Load autoclose HTML Tags
 :au Filetype php,html,xml,xsl source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
-
-
 
 " Set to full screen on load
 " if has("gui_running")
@@ -464,7 +424,6 @@ au BufNewFile,BufRead *.less set filetype=less
 " Show Yankring contents
 nnoremap <silent> <leader>y :YRShow<cr>
 
-" let php_sql_query = 1  "for SQL syntax highlighting inside strings
 let php_htmlInStrings = 1  "for HTML syntax highlighting inside strings
 
 " Adding a Next verb to Vim commands 
@@ -505,55 +464,3 @@ onoremap <silent> an" :<C-U>normal! f"va"<cr>
 
 " Rainbows!
 nmap <leader>R :RainbowParenthesesToggle<CR>
-
-" NERDTree configuration
-let NERDTreeIgnore=['\.rbc$', '\~$']
-map <Leader>n :NERDTreeToggle<CR>
-
-" Project Tree
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
-
-" Disable netrw's autocmd, since we're ALWAYS using NERDTree
-runtime plugin/netRwPlugin.vim
-augroup FileExplorer
-  au!
-augroup END
-
-let g:NERDTreeHijackNetrw = 0
-
-" If the parameter is a directory, cd into it
-function s:CdIfDirectory(directory)
-  if isdirectory(a:directory)
-    call ChangeDirectory(a:directory)
-  endif
-endfunction
-
-" NERDTree utility function
-function s:UpdateNERDTree(stay)
-  if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-      NERDTree
-      if !a:stay
-        wincmd p
-      end
-    endif
-  endif
-endfunction
-
-" Utility functions to create file commands
-function s:CommandCabbr(abbreviation, expansion)
-  execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
-endfunction
-
-function s:FileCommand(name, ...)
-  if exists("a:1")
-    let funcname = a:1
-  else
-    let funcname = a:name
-  endif
-
-  execute 'command -nargs=1 -complete=file ' . a:name . ' :call ' . funcname . '(<f-args>)'
-endfunction
-

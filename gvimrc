@@ -1,6 +1,11 @@
- " Command-T for CommandT
-  macmenu &File.Close key=<nop>
-  map <D-w> :bd<CR>
+ " CMD + W remap
+ macmenu &File.Close key=<nop>
+ map <D-w> :bd<CR>
+  
+if has("gui_macvim")
+  macmenu &File.New\ Tab key=<nop>
+  map <D-t> <Plug>PeepOpen
+end
 
 " Project Tree
 autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
