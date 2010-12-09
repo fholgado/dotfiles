@@ -30,10 +30,6 @@
 	path = bundle/matchit
 	url = https://github.com/vim-scripts/matchit.zip.git
 	ignore = untracked
-[submodule "bundle/minibufexpl"]
-	path = bundle/minibufexpl
-	url = https://github.com/vim-scripts/minibufexpl.vim.git
-	ignore = untracked
 [submodule "bundle/tcomment"]
 	path = bundle/tcomment
 	url = https://github.com/vim-scripts/tComment.git

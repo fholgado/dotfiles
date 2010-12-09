@@ -270,10 +270,10 @@ map <leader>q :e ~/buffer<cr>
 :au Filetype php,html,xml,xsl source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
 
 " Set to full screen on load
-if has("gui_running")
-  set fuoptions=maxvert,maxhorz
-  au GUIEnter * set fullscreen
-endif
+" if has("gui_running")
+"   set fuoptions=maxvert,maxhorz
+"   au GUIEnter * set fullscreen
+" endif
 
 " sane movement with wrap turned on
 nnoremap j gj
