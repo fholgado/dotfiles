@@ -81,7 +81,6 @@ if has("gui_running")
   set guioptions-=l  "remove right-hand scroll Bar
   set guioptions-=L  "remove right-hand scroll bar
   set showtabline=0
-  set background=dark
   set t_Co=256
   set background=dark
   colorscheme molokai2
