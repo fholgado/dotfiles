@@ -47,3 +47,6 @@
 [submodule "bundle/minibufexplorerpp"]
 	path = bundle/minibufexplorerpp
 	url = https://github.com/vim-scripts/minibufexplorerpp.git
+[submodule "bundle/minibufexpl"]
+	path = bundle/minibufexpl
+	url = git@github.com:fholgado/minibufexpl.vim.git
