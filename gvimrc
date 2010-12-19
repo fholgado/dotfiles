@@ -8,7 +8,7 @@ if has("gui_macvim")
 end
 
 " Project Tree
-autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
+" autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
 
 
 " If the parameter is a directory, cd into it
@@ -21,7 +21,7 @@ function s:CdIfDirectory(directory)
   endif
 
   if directory
-    NERDTree
+    " NERDTree
     wincmd p
     bd
   endif
@@ -76,7 +76,7 @@ function ChangeDirectory(dir, ...)
   execute "cd " . a:dir
   let stay = exists("a:1") ? a:1 : 1
 
-  NERDTree
+  " NERDTree
 
   if !stay
     wincmd p

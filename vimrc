@@ -243,14 +243,10 @@ nmap gV `[v`]
 
 " Minibuffer plugin
 let g:miniBufExplModSelTarget = 1
-let g:miniBufExplorerMoreThanOne = 2
-let g:miniBufExplModSelTarget = 0
+let g:miniBufExplorerMoreThanOne = 0
 let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplVSplit = 0
 let g:miniBufExplSplitBelow=0
-
-let g:bufExplorerSortBy = "name"
 
 autocmd BufRead,BufNew :call UMiniBufExplorer
 
