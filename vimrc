@@ -224,7 +224,7 @@ set laststatus=2
 set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
 
 function! CurDir()
-    let curdir = substitute(getcwd(), '/Users/amir/', "~/", "g")
+    let curdir = substitute(getcwd(), '/Users/fholgado/', "~/", "g")
     return curdir
 endfunction
 
@@ -241,14 +241,12 @@ vmap J ]egv
 " Visually select the text that was last edited/pasted
 nmap gV `[v`]
 
-" Minibuffer plugin
+" MiniBufExplorer plugin
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 0
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplVSplit = 0
 let g:miniBufExplSplitBelow=0
-
-autocmd BufRead,BufNew :call UMiniBufExplorer
 
 autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
