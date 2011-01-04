@@ -49,7 +49,7 @@
 	url = https://github.com/vim-scripts/minibufexplorerpp.git
 [submodule "bundle/minibufexpl"]
 	path = bundle/minibufexpl
-	url = git@github.com:fholgado/minibufexpl.vim.git
+	url = https://github.com/fholgado/dotfiles.git
 [submodule "bundle/conque"]
 	path = bundle/conque
 	url = https://github.com/vim-scripts/Conque-Shell.git
