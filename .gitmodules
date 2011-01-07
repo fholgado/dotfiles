@@ -56,3 +56,6 @@
 [submodule "bundle/rails"]
 	path = bundle/rails
 	url = https://github.com/tpope/vim-rails.git
+[submodule "bundle/indent_guides"]
+	path = bundle/indent_guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git
