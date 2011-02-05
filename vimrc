@@ -256,6 +256,9 @@ map <leader>ss :setlocal spell!<cr>
 au FileType javascript setl nocindent
 au FileType javascript imap <c-a> alert();<esc>hi
 
+" PHP parser check (CTRL-G)
+autocmd FileType php noremap <C-G> :!/Applications/XAMPP/xamppfiles/bin/php -l %<CR>
+
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
 
