@@ -123,6 +123,10 @@ autocmd FileType html,css set noexpandtab tabstop=2
 
 set lbr
 
+" DelimitMate stuff
+let delimitMate_expand_space = 1
+let delimitMate_expand_cr = 1
+
 set autoindent "Auto indent
 set wrap linebreak nolist
 " set formatoptions=qrn1
@@ -190,11 +194,11 @@ map <leader>cd :cd %:p:h<cr>
 
 " Custom maps to set working directories quickly
 " At Work
-map <leader>p1 :cd /Applications/XAMPP/htdocs/ptonline/trunk/system/application/<cr>
-map <leader>p2 :cd /Applications/XAMPP/htdocs/pt20/trunk/<cr>
+map <leader>p1 :cd /Applications/XAMPP/htdocs/ptonlinegit/<cr>
+map <leader>p2 :cd /Applications/XAMPP/htdocs/ptdotcomgit/<cr>
 " At Home
-map <leader>p3 :cd ~/Sites/ptonline/system/application/<cr>
-map <leader>p4 :cd ~/Sites/pt20/<cr>
+map <leader>p3 :cd ~/Sites/ptonlinegit/<cr>
+map <leader>p4 :cd ~/Sites/ptdotcomgit/<cr>
 
 
 command! Bclose call <SID>BufcloseCloseIt()
@@ -247,6 +251,8 @@ let g:miniBufExplorerMoreThanOne = 0
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplVSplit = 0
 let g:miniBufExplSplitBelow=0
+let g:miniBufExplSplitBelow=0
+let g:miniBufExplorerDebugMode = 3
 
 autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
