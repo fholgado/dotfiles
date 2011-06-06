@@ -24,6 +24,7 @@ let g:mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
+cmap w!! w !sudo tee % >/dev/null
 
 " Fast editing of the .vimrc
 " map <leader>e :e! ~/.vim_runtime/vimrc<cr>
@@ -83,7 +84,8 @@ if has("gui_running")
   set showtabline=0
   set t_Co=256
   set background=dark
-  colorscheme molokai2
+  " colorscheme molokai2
+  colorscheme solarized
 
   set nu
 else
@@ -251,8 +253,8 @@ let g:miniBufExplorerMoreThanOne = 0
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplVSplit = 0
 let g:miniBufExplSplitBelow=0
-let g:miniBufExplSplitBelow=0
-let g:miniBufExplorerDebugMode = 3
+let g:miniBufExplorerDebugMode = 0
+let g:miniBufExplorerDebugLevel = 3
 
 autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
