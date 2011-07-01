@@ -45,6 +45,10 @@ set cmdheight=1 "The commandbar height
 
 set hid "Change buffer - without saving
 
+"Browser Refresh
+let g:RefreshRunningBrowserDefault = 'chrome'
+map <silent><leader>r :RRB<CR>
+
 " Set backspace config
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
@@ -84,8 +88,8 @@ if has("gui_running")
   set showtabline=0
   set t_Co=256
   set background=dark
-  " colorscheme molokai2
-  colorscheme solarized
+  colorscheme molokai2
+  " colorscheme solarized
 
   set nu
 else
@@ -196,8 +200,7 @@ map <leader>cd :cd %:p:h<cr>
 
 " Custom maps to set working directories quickly
 " At Work
-map <leader>p1 :cd /Applications/XAMPP/htdocs/ptonlinegit/<cr>
-map <leader>p2 :cd /Applications/XAMPP/htdocs/ptdotcomgit/<cr>
+map <leader>p1 :cd /Applications/XAMPP/htdocs/<cr>
 " At Home
 map <leader>p3 :cd ~/Sites/ptonlinegit/<cr>
 map <leader>p4 :cd ~/Sites/ptdotcomgit/<cr>

@@ -55,6 +55,9 @@ endfunction
 vmap <D-]> >gv
 vmap <D-[> <gv
 
+" Map CMD-R to refresh browser
+map <silent><D-r> :RRB<CR>
+
 " Utility functions to create file commands
 function s:CommandCabbr(abbreviation, expansion)
   execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
