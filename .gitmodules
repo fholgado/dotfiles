@@ -10,10 +10,6 @@
 	path = bundle/yankring
 	url = https://github.com/vim-scripts/YankRing.vim.git
 	ignore = untracked
-[submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-	ignore = untracked
 [submodule "bundle/surround"]
 	path = bundle/surround
 	url = https://github.com/tpope/vim-surround.git
@@ -34,31 +30,21 @@
 	path = bundle/tcomment
 	url = https://github.com/vim-scripts/tComment.git
 	ignore = untracked
-[submodule "bundle/html-autoclosetag"]
-	path = bundle/html-autoclosetag
-	url = https://github.com/vim-scripts/HTML-AutoCloseTag.git
-	ignore = untracked
 [submodule "bundle/unimpaired"]
 	path = bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "bundle/bufexplorer"]
-	path = bundle/bufexplorer
-	url = https://github.com/vim-scripts/bufexplorer.zip.git
-[submodule "bundle/minibufexplorerpp"]
-	path = bundle/minibufexplorerpp
-	url = https://github.com/vim-scripts/minibufexplorerpp.git
 [submodule "bundle/minibufexpl"]
 	path = bundle/minibufexpl
 	url = https://github.com/fholgado/minibufexpl.vim.git
 [submodule "bundle/conque"]
 	path = bundle/conque
 	url = https://github.com/vim-scripts/Conque-Shell.git
-[submodule "bundle/rails"]
-	path = bundle/rails
-	url = https://github.com/tpope/vim-rails.git
 [submodule "bundle/indent_guides"]
 	path = bundle/indent_guides
 	url = git://github.com/nathanaelkane/vim-indent-guides.git
-[submodule "bundle/supertab"]
-	path = bundle/supertab
-	url = https://github.com/ervandew/supertab.git
+[submodule "bundle/vim-repeat"]
+	path = bundle/vim-repeat
+	url = https://github.com/tpope/vim-repeat
+[submodule "bundle/browser-refresh"]
+	path = bundle/browser-refresh
+	url = https://github.com/mkitt/browser-refresh.vim.git
