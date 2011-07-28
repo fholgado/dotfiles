@@ -48,3 +48,9 @@
 [submodule "bundle/browser-refresh"]
 	path = bundle/browser-refresh
 	url = https://github.com/mkitt/browser-refresh.vim.git
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "bundle/autoclose"]
+	path = bundle/autoclose
+	url = https://github.com/vim-scripts/AutoClose.git
