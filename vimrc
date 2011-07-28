@@ -230,7 +230,10 @@ endfunction
 set laststatus=2
 
 " Format the statusline
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c 
+set statusline+=%#warningmsg#
+set statusline+=\ %{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 function! CurDir()
     let curdir = substitute(getcwd(), '/Users/fholgado/', "~/", "g")
@@ -272,9 +275,6 @@ autocmd FileType php noremap <C-G> :!/Applications/XAMPP/xamppfiles/bin/php -l %
 
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
-
-" Load autoclose HTML Tags
-:au Filetype php,html,xml,xsl source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
 
 " Set to full screen on load
 " if has("gui_running")
@@ -371,3 +371,14 @@ function! MyFoldText()
     return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
 endfunction
 set foldtext=MyFoldText()
+
+" Syntastic Options
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+
+" Markdown to HTML
+nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
+
+" Git Push commands
+map <leader>ph :Git push heroku master <cr>
+map <leader>pg :Git push github master <cr>
