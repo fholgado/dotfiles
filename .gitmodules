@@ -53,4 +53,10 @@
 	url = https://github.com/scrooloose/syntastic.git
 [submodule "bundle/autoclose"]
 	path = bundle/autoclose
-	url = https://github.com/vim-scripts/AutoClose.git
+	url = https://github.com/rdpate/vim-autoclose.git
+[submodule "bundle/endwise"]
+	path = bundle/endwise
+	url = https://github.com/tpope/vim-endwise.git
+[submodule "bundle/vim-autoclose"]
+	path = bundle/vim-autoclose
+	url = git@github.com:fholgado/vim-autoclose.git
