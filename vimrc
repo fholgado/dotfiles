@@ -1,7 +1,3 @@
-"PATHOGEN YO
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-"
 " Sets how many lines of history VIM has to remember
 set history=300
 set ttyfast
@@ -9,6 +5,45 @@ set hidden
 
 " Turn off Vi compatibility
 set nocompatible
+
+"Vundle Config
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'bkad/CamelCaseMotion'
+Bundle 'tpope/vim-endwise'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'groenewege/vim-less'
+Bundle 'tsaleh/vim-matchit'
+Bundle 'scrooloose/nerdtree'
+Bundle 'msanders/snipmate.vim'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'tpope/vim-surround'
+Bundle 'scrooloose/syntastic'
+Bundle 'vim-scripts/tComment'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'tpope/vim-repeat'
+Bundle 'millermedeiros/vim-statline'
+Bundle 'vim-scripts/YankRing.vim'
+Bundle 'fholgado/Molokai2'
+Bundle 'vim-scripts/ZoomWin'
+Bundle 'rson/vim-conque'
+" Bundle 'fholgado/minibufexpl.vim'
+" Bundle 'mrtazz/simplenote.vim'
+" Bundle 'itspriddle/vim-jquery'
+" Bundle 'vim-scripts/vrackets'
+" Bundle 'Townk/vim-autoclose'
+" Bundle 'Raimondi/delimitMate'
 
 " Enable filetype plugin
 filetype plugin on
@@ -72,7 +107,7 @@ set visualbell t_vb=
 syntax enable "Enable syntax hl
 
 " Set Fonts
-set gfn=Inconsolata:h14
+set gfn=Inconsolata:h19
 set shell=/bin/bash
 
 " Highlight current line
@@ -87,11 +122,10 @@ if has("gui_running")
   set guioptions-=L  "remove right-hand scroll bar
   set showtabline=0
   set t_Co=256
-  set background=dark
+  set background=light
   colorscheme molokai2
-  " colorscheme solarized
 
-  set nu
+  set number
 else
   colorscheme zellner
   set background=dark
@@ -128,10 +162,6 @@ autocmd FileType html set formatoptions+=tl
 autocmd FileType html,css set noexpandtab tabstop=2
 
 set lbr
-
-" DelimitMate stuff
-let delimitMate_expand_space = 1
-let delimitMate_expand_cr = 1
 
 set autoindent "Auto indent
 set wrap linebreak nolist
@@ -189,22 +219,12 @@ map <leader>ba :1,300 bd!<cr>
 map L :bn<cr>
 map H :bp<cr>
 
-" Tab configuration
-map <leader>tn :tabnew %<cr>
-map <leader>te :tabedit 
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-
 " When pressing <leader>cd switch to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>
 
 " Custom maps to set working directories quickly
 " At Work
 map <leader>p1 :cd /Applications/XAMPP/htdocs/<cr>
-" At Home
-map <leader>p3 :cd ~/Sites/ptonlinegit/<cr>
-map <leader>p4 :cd ~/Sites/ptdotcomgit/<cr>
-
 
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
@@ -254,13 +274,16 @@ vmap J ]egv
 nmap gV `[v`]
 
 " MiniBufExplorer plugin
-let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 0
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplVSplit = 0
 let g:miniBufExplSplitBelow=0
-let g:miniBufExplorerDebugMode = 0
-let g:miniBufExplorerDebugLevel = 3
+let g:miniBufExplorerDebugMode = 1
+let g:miniBufExplorerDebugLevel = 1
+let g:miniBufExplMapWindowNavVim = 0
+" let g:miniBufExplCloseOnSelect = 1
+let g:miniBufExplCheckDupeBufs = 0
+map <Leader>m :TMiniBufExplorer<cr>
 
 autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
@@ -276,12 +299,6 @@ autocmd FileType php noremap <C-G> :!/Applications/XAMPP/xamppfiles/bin/php -l %
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
 
-" Set to full screen on load
-" if has("gui_running")
-"   set fuoptions=maxvert,maxhorz
-"   au GUIEnter * set fullscreen
-" endif
-
 " sane movement with wrap turned on
 nnoremap j gj
 nnoremap k gk
@@ -291,7 +308,6 @@ vnoremap k gk
 "don't move the cursor after pasting (by jumping to back start of previously changed text)
 noremap p p`[
 noremap P P`[
-
 
 " Insert an empty line above or below the cursor
 nnoremap <D-j> o<Esc>
@@ -309,8 +325,6 @@ au BufNewFile,BufRead *.less set filetype=less
 
 " Show Yankring contents
 nnoremap <silent> <leader>y :YRShow<cr>
-
-let php_htmlInStrings = 1  "for HTML syntax highlighting inside strings
 
 " Adding a Next verb to Vim commands 
 " SOURCE: http://forrst.com/posts/Adding_a_Next_Adjective_to_Vim_Version_2-C4P
@@ -382,3 +396,26 @@ nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
 " Git Push commands
 map <leader>ph :Git push heroku master <cr>
 map <leader>pg :Git push github master <cr>
+map <leader>gw :Gwrite <cr>
+map <leader>gc :Gcommit <cr>
+map <leader>gs :Gstatus <cr>
+
+" Statline stuff
+let g:statline_fugitive = 1
+
+" CtrlP plugin
+let g:ctrlp_map = '<D-t>'
+let g:ctrlp_working_path_mode = 2
+
+" ZoomWin configuration
+map <Leader><Leader> :ZoomWin<CR>
+
+" Trailing Whitespaces as .
+set list listchars=tab:\ \ ,trail:·
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Remap jk to ESC
+inoremap jk <ESC>

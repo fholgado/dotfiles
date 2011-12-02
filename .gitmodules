@@ -60,3 +60,21 @@
 [submodule "bundle/vim-autoclose"]
 	path = bundle/vim-autoclose
 	url = git@github.com:fholgado/vim-autoclose.git
+[submodule "bundle/simplenote.vim"]
+	path = bundle/simplenote.vim
+	url = git://github.com/mrtazz/simplenote.vim.git
+[submodule "bundle/vim-superstatus"]
+	path = bundle/vim-superstatus
+	url = https://github.com/Lokaltog/vim-superstatus.git
+[submodule "bundle/current-func-info"]
+	path = bundle/current-func-info
+	url = https://github.com/tyru/current-func-info.vim
+[submodule "bundle/vim-coffee-script"]
+	path = bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "bundle/vim-statline"]
+	path = bundle/vim-statline
+	url = https://github.com/millermedeiros/vim-statline.git
+[submodule "bundle/ctrlp-vim"]
+	path = bundle/ctrlp-vim
+	url = https://github.com/kien/ctrlp.vim.git

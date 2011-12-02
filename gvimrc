@@ -4,7 +4,7 @@
   
 if has("gui_macvim")
   macmenu &File.New\ Tab key=<nop>
-  map <D-t> <Plug>PeepOpen
+  " map <D-t> <Plug>PeepOpen
 end
 
 " Project Tree
@@ -25,6 +25,15 @@ function s:CdIfDirectory(directory)
     wincmd p
     bd
   endif
+endfunction
+
+" Command-e for ConqueTerm
+  map <D-e> :call StartTerm()<CR>
+
+" ConqueTerm wrapper
+function StartTerm()
+  execute 'ConqueTerm ' . $SHELL . ' --login'
+  setlocal listchars=tab:\ \ 
 endfunction
 
 " NERDTree utility function
@@ -54,6 +63,8 @@ endfunction
 " Command-][ to increase/decrease indentation
 vmap <D-]> >gv
 vmap <D-[> <gv
+map <D-]> >gv
+map <D-[> <gv
 
 " Map CMD-R to refresh browser
 map <silent><D-r> :RRB<CR>
