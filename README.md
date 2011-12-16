@@ -8,6 +8,7 @@ git clone git://github.com/fholgado/dotfiles.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/gvimrc ~/.gvimrc
 cd ~/.vim
+git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 </pre>
 
 Now, you can open Vim and run the following command:
