@@ -33,11 +33,17 @@ Bundle 'vim-scripts/tComment'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-repeat'
-Bundle 'millermedeiros/vim-statline'
+Bundle 'tpope/vim-rails'
+" Bundle 'millermedeiros/vim-statline'
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-scripts/YankRing.vim'
 Bundle 'fholgado/Molokai2'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'rson/vim-conque'
+Bundle 'stonean/slim'
+Bundle 'vim-scripts/sessionman.vim'
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
 " Bundle 'fholgado/minibufexpl.vim'
 " Bundle 'mrtazz/simplenote.vim'
 " Bundle 'itspriddle/vim-jquery'
@@ -106,9 +112,10 @@ set visualbell t_vb=
 
 syntax enable "Enable syntax hl
 
-" Set Fonts
-set gfn=Inconsolata:h19
 set shell=/bin/bash
+
+" Set fancy stuff for statusline
+let g:Powerline_symbols = 'fancy'
 
 " Highlight current line
 :set cursorline
@@ -290,9 +297,6 @@ autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 "Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
-au FileType javascript setl nocindent
-au FileType javascript imap <c-a> alert();<esc>hi
-
 " PHP parser check (CTRL-G)
 autocmd FileType php noremap <C-G> :!/Applications/XAMPP/xamppfiles/bin/php -l %<CR>
 
@@ -404,8 +408,10 @@ map <leader>gs :Gstatus <cr>
 let g:statline_fugitive = 1
 
 " CtrlP plugin
+let g:ctrlp_mruf_exclude = '/tmp/.*\|/temp/.*|.DS_Store' " MacOSX/Linux
 let g:ctrlp_map = '<D-t>'
 let g:ctrlp_working_path_mode = 2
+let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|DS_Store'
 
 " ZoomWin configuration
 map <Leader><Leader> :ZoomWin<CR>
@@ -419,3 +425,7 @@ nnoremap N Nzzzv
 
 " Remap jk to ESC
 inoremap jk <ESC>
+
+" Send visual selection to gist.github.com
+" Requires gist (brew install gist)
+vnoremap <leader>G :w !gist -p -t %:e \| pbcopy<cr>

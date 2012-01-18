@@ -5,6 +5,7 @@
 if has("gui_macvim")
   macmenu &File.New\ Tab key=<nop>
   " map <D-t> <Plug>PeepOpen
+  map <D-y> :CtrlPMRU<CR>
 end
 
 " Project Tree
@@ -142,3 +143,6 @@ call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
 call s:DefineCommand("e", "Edit")
+
+" Set Fonts
+set gfn=Menlo\ for\ Powerline:h18
