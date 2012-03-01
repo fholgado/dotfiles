@@ -16,17 +16,14 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'bkad/CamelCaseMotion'
 Bundle 'tpope/vim-endwise'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'groenewege/vim-less'
 Bundle 'tsaleh/vim-matchit'
 Bundle 'scrooloose/nerdtree'
 Bundle 'msanders/snipmate.vim'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'tpope/vim-surround'
 Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/tComment'
@@ -34,22 +31,13 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-rails'
-" Bundle 'millermedeiros/vim-statline'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'vim-scripts/YankRing.vim'
 Bundle 'fholgado/Molokai2'
 Bundle 'vim-scripts/ZoomWin'
-Bundle 'rson/vim-conque'
-Bundle 'stonean/slim'
-Bundle 'vim-scripts/sessionman.vim'
 Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
-" Bundle 'fholgado/minibufexpl.vim'
-" Bundle 'mrtazz/simplenote.vim'
-" Bundle 'itspriddle/vim-jquery'
-" Bundle 'vim-scripts/vrackets'
-" Bundle 'Townk/vim-autoclose'
-" Bundle 'Raimondi/delimitMate'
+Bundle 'Raimondi/delimitMate'
 
 " Enable filetype plugin
 filetype plugin on
@@ -117,6 +105,8 @@ set shell=/bin/bash
 " Set fancy stuff for statusline
 let g:Powerline_symbols = 'fancy'
 
+autocmd bufwritepost .vimrc call Pl#Load()
+
 " Highlight current line
 :set cursorline
 
@@ -132,13 +122,12 @@ if has("gui_running")
   set background=light
   colorscheme molokai2
 
-  set number
 else
-  colorscheme zellner
+  set t_Co=256
+  colorscheme molokai2
   set background=dark
-  
-  set nonu
 endif
+set number
 
 set encoding=utf8
 try
@@ -256,17 +245,6 @@ endfunction
 " Always hide the statusline
 set laststatus=2
 
-" Format the statusline
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c 
-set statusline+=%#warningmsg#
-set statusline+=\ %{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-function! CurDir()
-    let curdir = substitute(getcwd(), '/Users/fholgado/', "~/", "g")
-    return curdir
-endfunction
-
 "Remap VIM 0
 map 0 ^
 
@@ -281,24 +259,21 @@ vmap J ]egv
 nmap gV `[v`]
 
 " MiniBufExplorer plugin
-let g:miniBufExplorerMoreThanOne = 0
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplVSplit = 0
-let g:miniBufExplSplitBelow=0
-let g:miniBufExplorerDebugMode = 1
-let g:miniBufExplorerDebugLevel = 1
-let g:miniBufExplMapWindowNavVim = 0
+" let g:miniBufExplorerMoreThanOne = 0
+" let g:miniBufExplUseSingleClick = 1
+" let g:miniBufExplVSplit = 0
+" let g:miniBufExplSplitBelow=0
+" let g:miniBufExplorerDebugMode = 1
+" let g:miniBufExplorerDebugLevel = 1
+" let g:miniBufExplMapWindowNavVim = 0
 " let g:miniBufExplCloseOnSelect = 1
-let g:miniBufExplCheckDupeBufs = 0
-map <Leader>m :TMiniBufExplorer<cr>
+" let g:miniBufExplCheckDupeBufs = 0
+" map <Leader>m :TMiniBufExplorer<cr>
 
 autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 
 "Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
-
-" PHP parser check (CTRL-G)
-autocmd FileType php noremap <C-G> :!/Applications/XAMPP/xamppfiles/bin/php -l %<CR>
 
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
@@ -409,7 +384,7 @@ let g:statline_fugitive = 1
 
 " CtrlP plugin
 let g:ctrlp_mruf_exclude = '/tmp/.*\|/temp/.*|.DS_Store' " MacOSX/Linux
-let g:ctrlp_map = '<D-t>'
+let g:ctrlp_map = '<C-u>'
 let g:ctrlp_working_path_mode = 2
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|DS_Store'
 
@@ -429,3 +404,137 @@ inoremap jk <ESC>
 " Send visual selection to gist.github.com
 " Requires gist (brew install gist)
 vnoremap <leader>G :w !gist -p -t %:e \| pbcopy<cr>
+
+" Project Tree
+" autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
+
+" If the parameter is a directory, cd into it
+function s:CdIfDirectory(directory)
+  let explicitDirectory = isdirectory(a:directory)
+  let directory = explicitDirectory || empty(a:directory)
+
+  if explicitDirectory
+    exe "cd " . a:directory
+  endif
+
+  if directory
+    " NERDTree
+    wincmd p
+    bd
+  endif
+endfunction
+
+" NERDTree utility function
+function s:UpdateNERDTree(...)
+  let stay = 0
+
+  if(exists("a:1"))
+    let stay = a:1
+  end
+
+  if exists("t:NERDTreeBufName")
+    let nr = bufwinnr(t:NERDTreeBufName)
+    if nr != -1
+      exe nr . "wincmd w"
+      exe substitute(mapcheck("R"), "<CR>", "", "")
+      if !stay
+        wincmd p
+      end
+    endif
+  endif
+
+  if exists("CommandTFlush")
+    CommandTFlush
+  endif
+endfunction
+
+" Utility functions to create file commands
+function s:CommandCabbr(abbreviation, expansion)
+  execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
+endfunction
+
+function s:FileCommand(name, ...)
+  if exists("a:1")
+    let funcname = a:1
+  else
+    let funcname = a:name
+  endif
+
+  execute 'command -nargs=1 -complete=file ' . a:name . ' :call ' . funcname . '(<f-args>)'
+endfunction
+
+function s:DefineCommand(name, destination)
+  call s:FileCommand(a:destination)
+  call s:CommandCabbr(a:name, a:destination)
+endfunction
+
+" Public NERDTree-aware versions of builtin functions
+function ChangeDirectory(dir, ...)
+  execute "cd " . a:dir
+  let stay = exists("a:1") ? a:1 : 1
+
+  " NERDTree
+
+  if !stay
+    wincmd p
+  endif
+endfunction
+
+function Touch(file)
+  execute "!touch " . a:file
+  call s:UpdateNERDTree()
+endfunction
+
+function Remove(file)
+  let current_path = expand("%")
+  let removed_path = fnamemodify(a:file, ":p")
+
+  if (current_path == removed_path) && (getbufvar("%", "&modified"))
+    echo "You are trying to remove the file you are editing. Please close the buffer first."
+  else
+    execute "!rm " . a:file
+  endif
+
+  call s:UpdateNERDTree()
+endfunction
+
+function Edit(file)
+  if exists("b:NERDTreeRoot")
+    wincmd p
+  endif
+
+  execute "e " . a:file
+
+ruby << RUBY
+  destination = File.expand_path(VIM.evaluate(%{system("dirname " . a:file)}))
+  pwd         = File.expand_path(Dir.pwd)
+  home        = pwd == File.expand_path("~")
+
+  if home || Regexp.new("^" + Regexp.escape(pwd)) !~ destination
+    VIM.command(%{call ChangeDirectory(system("dirname " . a:file), 0)})
+  end
+RUBY
+endfunction
+
+" Define the NERDTree-aware aliases
+call s:DefineCommand("cd", "ChangeDirectory")
+call s:DefineCommand("touch", "Touch")
+call s:DefineCommand("rm", "Remove")
+call s:DefineCommand("e", "Edit")
+
+" Set Fonts
+set gfn=Menlo\ for\ Powerline
+
+" Slow Vim
+set notimeout
+set ttimeout
+set timeoutlen=50
+
+:let g:session_autoload = 'no'
+
+" Make life simpler
+:command! WQ wq
+:command! Wq wq
+:command! Qa qa
+:command! W w
+:command! Q q
